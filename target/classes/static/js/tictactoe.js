@@ -205,5 +205,5 @@ function checkIfFull(){
     playing = false;
     yourTurn = false;
     document.getElementById('header').innerText = 'INVITE SOMEONE';
-    alert("TIE!");
+    alert("DRAW!");
 }
