@@ -3,7 +3,6 @@ package pr.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import pr.dtos.UserDto;
 import pr.forms.UserForm;
 import pr.models.TicTacToe;
 import pr.models.User;
@@ -14,8 +13,6 @@ import org.json.simple.JSONObject;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Optional;
 
 @Component
 public class UsersServiceImpl implements UsersService {
@@ -42,6 +39,7 @@ public class UsersServiceImpl implements UsersService {
         TicTacToe toe = TicTacToe.builder()
                 .online(false)
                 .points(0)
+                .lastOnline(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         ticTacToeRepository.save(toe);
 
@@ -49,6 +47,7 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public void updateOnlineTicTacToe(User user) {
+        ticTacToeRepository.updateTicTacToeLastOnline(user.getId(), LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         ticTacToeRepository.updateTicTacToeUserOn(user.getId());
     }
 

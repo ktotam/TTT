@@ -26,6 +26,8 @@ public class TicTacToe {
 
     private boolean online;
 
+    private LocalDateTime lastOnline;
+
     private Integer points;
 
     public String getLogin() {

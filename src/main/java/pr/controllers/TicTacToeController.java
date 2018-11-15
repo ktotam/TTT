@@ -28,7 +28,7 @@ public class TicTacToeController {
     @SendTo("/topic/tictactoe")
     public String sendInvite(Authentication authentication, String message) throws InterruptedException {
         Thread.sleep(100);
-
+        usersService.updateOnlineTicTacToe(authenticationService.getUserByAuthentication(authentication));
         if (authenticationService.getUserByAuthentication(authentication).getId().toString().equals(message))
             return "refresh";
         return authenticationService.getUserByAuthentication(authentication).getId() + " " + message;
@@ -36,15 +36,19 @@ public class TicTacToeController {
 
     @MessageMapping("/turn")
     @SendTo("/topic/tictactoe")
-    public String turn(String message) throws InterruptedException {
+    public String turn(Authentication authentication, String message) throws InterruptedException {
         Thread.sleep(100);
+        usersService.updateOnlineTicTacToe(authenticationService.getUserByAuthentication(authentication));
+
         return message;
     }
 
     @MessageMapping("/answer")
     @SendTo("/topic/tictactoe")
-    public String answer(String message) throws InterruptedException {
+    public String answer(Authentication authentication, String message) throws InterruptedException {
         Thread.sleep(100);
+        usersService.updateOnlineTicTacToe(authenticationService.getUserByAuthentication(authentication));
+
         System.out.println(message);
         return message;
     }
@@ -53,6 +57,7 @@ public class TicTacToeController {
     @SendTo("/topic/tictactoe")
     public String win(Authentication authentication) throws InterruptedException {
         Thread.sleep(100);
+        usersService.updateOnlineTicTacToe(authenticationService.getUserByAuthentication(authentication));
         usersService.addWin(authenticationService.getUserByAuthentication(authentication));
         return "refresh";
     }

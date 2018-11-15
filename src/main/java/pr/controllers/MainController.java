@@ -11,7 +11,6 @@ import pr.forms.UserForm;
 import pr.services.AuthenticationService;
 import pr.services.UsersService;
 
-import javax.print.MultiDoc;
 
 
 @Controller
@@ -71,7 +70,8 @@ public class MainController {
 
     @PostMapping("/getOnlinePlayers")
     @ResponseBody
-    public String getOnline() {
+    public String getOnline(Authentication authentication) {
+        usersService.updateOnlineTicTacToe(authenticationService.getUserByAuthentication(authentication));
         return usersService.getOnlineTicTacToe();
     }
 
